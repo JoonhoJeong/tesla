@@ -1,6 +1,6 @@
 import React from 'react'
 
-function NavBar() {
+function SolarOffset() {
   return (
     <div>
       
@@ -8,4 +8,5 @@ function NavBar() {
   )
 }
 
-export default NavBar
+export default SolarOffset
+
