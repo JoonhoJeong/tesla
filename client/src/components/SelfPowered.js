@@ -24,10 +24,12 @@ function SelfPowered(props) {
     <div style={{margin: "1rem"}}>
       <Card variant="outlined"
         style={{width: "85%", position: "absolute", left: "7.5%", backgroundColor: "#323232", padding: "0px", borderRadius:"15px"}}>
-        <CardContent>
+        <CardContent style={{padding: "0px"}}>
           <h5 style={{color: "#E0E0E0", margin: "1rem"}}>Self-Powered</h5>
 
-          <Box style={{display: "flex", position: "absolute", left: "9.5em", top: "10em", color: "#E0E0E0"}}>
+        </CardContent>
+        <CardContent style={{display: "flex", justifyContent: "center", alignItems: "center", padding: "0px"}}>
+          <Box style={{display: "flex", position: "absolute", color: "#E0E0E0"}}>
             <TweenOne animation={{Children: {
                                     value: totalValue,
                                     floatLength: 0
@@ -53,7 +55,8 @@ function SelfPowered(props) {
             </Pie>
           </PieChart>
           {/* </ResponsiveContainer> */}
-
+        </CardContent>
+        <CardContent style={{padding: "1vh"}}>
           <Box style={{display: "flex", justifyContent: "space-around"}}>
             <Box>
               <h6 style={{margin: "0px", color: "#d0d0d0"}}>

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const performanceSchema = mongoose.Schema({
   date: {
-    type: Date,
+    type: String,
     unique: 1
   },
 
