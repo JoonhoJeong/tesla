@@ -1,13 +1,13 @@
 import { Box, Card, CardContent } from '@material-ui/core';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+import { PieChart, Pie, Cell } from 'recharts'
 import TweenOne from 'rc-tween-one';
 import Children from 'rc-tween-one/lib/plugin/ChildrenPlugin';
 
 TweenOne.plugins.push(Children);
 
 function SelfPowered(props) {
-  const totalValue = (+props.solar) + (+props.powerwall);
+
   const data01 = [
     { "name": 'Solar', "value": +props.solar },
     { "name": 'Powerwall', "value": +props.powerwall },
@@ -20,6 +20,8 @@ function SelfPowered(props) {
   const COLORS = ['#ffc107', '#64dd17', '#BBBBBB'];
 
 
+  console.log("SelfPowered", props.solar, props.powerwall,  data01);
+
   return (
     <div style={{margin: "1rem"}}>
       <Card variant="outlined"
@@ -31,9 +33,9 @@ function SelfPowered(props) {
         <CardContent style={{display: "flex", justifyContent: "center", alignItems: "center", padding: "0px"}}>
           <Box style={{display: "flex", position: "absolute", color: "#E0E0E0"}}>
             <TweenOne animation={{Children: {
-                                    value: totalValue,
+                                    value: (+props.solar) + (+props.powerwall),
                                     floatLength: 0
-                                  }, duration: 2000}}>
+                                  }, duration: 3000}}>
               0
             </TweenOne>
             %
@@ -45,7 +47,7 @@ function SelfPowered(props) {
                  startAngle={90} endAngle={-270} fill={COLORS[2]} isAnimationActive={false}/>
             <Pie data={data01} dataKey="value" nameKey="name"
                  cx="50%" cy="50%" innerRadius={60} outerRadius={80}
-                 startAngle={90} endAngle={90-((+props.solar)+(+props.powerwall))*3.6} animationDuration="2000"
+                 startAngle={90} endAngle={90-((+props.solar)+(+props.powerwall))*3.6} animationDuration='3000'
                  style={{backgroundColor: "#BBBBBB"}}>
               {
                 data01.map((entry, index) => (

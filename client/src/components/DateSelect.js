@@ -7,12 +7,8 @@ import { add, format, startOfWeek, startOfMonth, startOfYear, endOfWeek, endOfMo
 import DateConvertDialog from './DateConvertDialog';
 
 let currentDate = add(new Date(), {days: -1});
-
+let DateRange = { startDate: currentDate, endDate: currentDate};
 function DateSelect(props) {
-  const [DateRange, setDateRange] = useState({
-      startDate: currentDate,
-      endDate: currentDate
-  });
   const [Mode, setMode] = useState("DAY")
   const [open, setOpen] = useState(false);
   const [DateIndex, setDateIndex] = useState("Yesterday")
@@ -25,7 +21,7 @@ function DateSelect(props) {
 
     switch (str) {
       case "DAY":
-        setDateRange({startDate: currentDate, endDate: currentDate});
+        DateRange = {startDate: currentDate, endDate: currentDate};
         if (isToday(currentDate)) {
           setDateIndex("Today");
         } else if (isYesterday(currentDate)) {
@@ -40,7 +36,7 @@ function DateSelect(props) {
         }
         break;
       case "WEEK":
-        setDateRange({startDate: startOfWeek(currentDate), endDate: endOfWeek(currentDate)});
+        DateRange = {startDate: startOfWeek(currentDate), endDate: endOfWeek(currentDate)};
         setDateIndex(format(startOfWeek(currentDate), 'yyyy-MM-dd') +
                       ' ~ ' + format(endOfWeek(currentDate), 'yyyy-MM-dd'));
         if (isThisWeek(currentDate)) {
@@ -50,7 +46,7 @@ function DateSelect(props) {
         }
         break;
       case "MONTH":
-        setDateRange({startDate: startOfMonth(currentDate), endDate: endOfMonth(currentDate)});
+        DateRange = {startDate: startOfMonth(currentDate), endDate: endOfMonth(currentDate)};
         setDateIndex(format(startOfMonth(currentDate), 'yyyy-MM-dd') +
                       ' ~ ' + format(endOfMonth(currentDate), 'yyyy-MM-dd'));
         if (isThisMonth(currentDate)) {
@@ -60,7 +56,7 @@ function DateSelect(props) {
         }
         break;
       case "YEAR":
-        setDateRange({startDate: startOfYear(currentDate), endDate: endOfYear(currentDate)});
+        DateRange = {startDate: startOfYear(currentDate), endDate: endOfYear(currentDate)};
         setDateIndex(format(startOfYear(currentDate), 'yyyy-MM-dd') +
                       ' ~ ' + format(endOfYear(currentDate), 'yyyy-MM-dd'));
         if (isThisYear(currentDate)) {
@@ -70,12 +66,15 @@ function DateSelect(props) {
         }
         break;
       case "LIFETIME":
+        DateRange = "LIFETIME";
         setDateIndex("LifeTime");
         setShowButton(["none", "none"]);
         break;
       default :
         break;
     }
+
+    props.OnEvent(DateRange);
   }
 
   const handleClose = (str) => {
@@ -110,9 +109,8 @@ function DateSelect(props) {
     changeDateRange(Mode);
   }
   useEffect(() => {
-    console.log("useEffect");
     props.OnEvent(DateRange);
-  }, [DateRange])
+  }, [])
 
   return (
     <div>
@@ -124,7 +122,7 @@ function DateSelect(props) {
           </Button>
         </Box>
         <Button style={{ display: "block", color: "#eeeeee"}} onClick={handleClickOpen}>
-          <Box>{DateIndex}</Box> 
+          <Box>{DateIndex}</Box>
           <KeyboardArrowDown color="white"/>
         </Button>
         <Box display={ShowButton[1]} style={{position: "absolute", right: "3rem"}}>
