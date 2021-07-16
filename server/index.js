@@ -8,8 +8,6 @@ const {format, eachDayOfInterval} = require('date-fns');
 const config = require('./config/key');
 const parseISO = require('date-fns/parseISO')
 const parseJSON = require('date-fns/parseJSON')
-// import { add, format, startOfWeek, startOfMonth, startOfYear, endOfWeek, endOfMonth, endOfYear, isToday, isYesterday,
-//   isThisWeek, isThisMonth, isThisYear, differenceInDays } from 'date-fns';
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -42,7 +40,6 @@ let DateRange = {startDate:null, endDate:null};
 app.post('/api/getEnergyInfo', (req, res) => {
   let array = [];
 
-  console.log("JJH server1", req.body.startDate);
   parseStartDate = parseISO(req.body.startDate);
   parseEndDate = parseISO(req.body.endDate);
   
@@ -51,15 +48,33 @@ app.post('/api/getEnergyInfo', (req, res) => {
     end: parseEndDate
   });
   
-  console.log("JJH server2", format(parseStartDate, 'yyyy-MM-dd'));
-  console.log("JJH server2-2", array);
-  Performance.find({'date': format(parseStartDate, 'yyyy-MM-dd')})
-    .exec((err, energyData) => {
-      if (err) return res.status(400).send(err);
+  array.forEach(function(item, index, arr) {
+    arr[index] = format(item, 'yyyy-MM-dd');
+  });
+
+  Performance.find({'date': array})
+  .exec((err, energyData) => {
+    if (err) return res.status(400).send(err);
+    let energyDataTotal = {self_powered_solar:0, self_powered_powerwall:0, solar_offset_solar:0, solar_offset_home:0};
+    let energyDataResult = {self_powered_solar:0, self_powered_powerwall:0, solar_offset_solar:0, solar_offset_home:0};
+    let count = 0;
+    console.log("JJH server1", energyData);
+    energyData.forEach(function(item, index, arr) {
+      energyDataTotal.self_powered_solar += item.self_powered_solar;
+      energyDataTotal.self_powered_powerwall += item.self_powered_powerwall;
+      energyDataTotal.solar_offset_solar += item.solar_offset_solar;
+      energyDataTotal.solar_offset_home += item.solar_offset_home;
+      count++;
+      console.log("JJH server2", energyDataTotal);
+    });
     
-      console.log("JJH server3", energyData);
-      return res.status(200).json({ success: true, energyData });
-    })
+    energyDataResult.self_powered_solar += energyDataTotal.self_powered_solar / count;
+    energyDataResult.self_powered_powerwall += energyDataTotal.self_powered_powerwall / count;
+    energyDataResult.solar_offset_solar += energyDataTotal.solar_offset_solar;
+    energyDataResult.solar_offset_home += energyDataTotal.solar_offset_home;
+    console.log("JJH server3", energyDataResult);
+    return res.status(200).json({ success: true, energyDataResult});
+  })
 });
 
 

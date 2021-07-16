@@ -6,8 +6,8 @@ import { ArrowBackIos } from '@material-ui/icons';
 function Head() {
   return (
     <Box display="flex" justifyContent="center" alignItems="center" m={2}>
-      <Button style={{ color: "#eeeeee", position: "absolute", left: "1rem"}}>
-        <ArrowBackIos color="white" />
+      <Button style={{ color: "#e5e5e5", position: "absolute", left: "1rem"}}>
+        <ArrowBackIos color="e5e5e5" />
       </Button>
       <Box>Performance</Box>
     </Box>

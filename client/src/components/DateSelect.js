@@ -117,18 +117,18 @@ function DateSelect(props) {
       <DateConvertDialog open={open} handleClose={(str)=>handleClose(str)}/>
       <Box display="flex" justifyContent="center" alignItems="center" p={2} borderBottom={1}>
         <Box display={ShowButton[0]} style={{position: "absolute", left: "3rem"}}>
-          <Button style={{ color: "#eeeeee"}} onClick={()=>moveDateIndex(-1)}>
-            <ArrowBackIos color="white" style={{ fontSize: 15 }} />
+          <Button style={{ color: "#e5e5e5"}} onClick={()=>moveDateIndex(-1)}>
+            <ArrowBackIos color="a0a0a0" style={{ fontSize: 15 }} />
           </Button>
         </Box>
-        <Button style={{ display: "block", color: "#eeeeee"}} onClick={handleClickOpen}>
+        <Button style={{ display: "block", color: "#e5e5e5"}} onClick={handleClickOpen}>
           <Box>{DateIndex}</Box>
-          <KeyboardArrowDown color="white"/>
+          <KeyboardArrowDown color="#e5e5e5"/>
         </Button>
         <Box display={ShowButton[1]} style={{position: "absolute", right: "3rem"}}>
           <Button onClick={()=>moveDateIndex(1)}
              style={{ color: "#eeeeee"}}>
-            <ArrowForwardIos color="white" style={{ fontSize: 15 }} />
+            <ArrowForwardIos color="a0a0a0" style={{ fontSize: 15 }} />
           </Button>
         </Box>
       </Box>
